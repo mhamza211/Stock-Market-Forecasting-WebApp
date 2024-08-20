@@ -140,5 +140,3 @@ st.write("----")
 st.write("<p style='color:green; font-size: 50px; font-weight:bold;'>Thank you for using this app<p/>",unsafe_allow_html=True)
 st.write("---")
 
-st.write("<p style='color:black; font-size: 25px;'>About the author:<p/>",unsafe_allow_html=True)
-st.write("---")
