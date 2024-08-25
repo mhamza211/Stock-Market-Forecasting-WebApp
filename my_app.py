@@ -17,7 +17,7 @@ day = current_date.day
 title = 'Smart Stock Forecaster'
 # st.title(title)
 # st.subheader('Empowering You to Stay Ahead in the Market')
-st.markdown(f"<h1 style='text-align: center; color: #2F4F4F;'>{title}</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center; color: #F0F8FF;'>{title}</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center; color: #808080;'>Empowering You to Stay Ahead in the Market</h3>", unsafe_allow_html=True)
 
 
