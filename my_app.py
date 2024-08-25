@@ -25,7 +25,7 @@ st.write('**Note:** This app also includes stock predictions for companies liste
 
 # Sidebar to take input company
 st.sidebar.header('Select the parameters from below')
-start_date = st.sidebar.date_input('Start Date', date(2023,11 ,25))
+start_date = st.sidebar.date_input('Start Date', date(2021,11 ,01))
 end_date = st.sidebar.date_input('End Date', date(year, month, day))
 
 pakistani_companies = [
