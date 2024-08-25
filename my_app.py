@@ -15,18 +15,25 @@ month = current_date.month
 day = current_date.day
 # Title
 title = 'Smart Stock Forecaster'
-st.title(title)
-st.subheader('Empowering You to Stay Ahead in the Market')
+# st.title(title)
+# st.subheader('Empowering You to Stay Ahead in the Market')
+st.markdown(f"<h1 style='text-align: center; color: #2F4F4F;'>{title}</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: #808080;'>Empowering You to Stay Ahead in the Market</h3>", unsafe_allow_html=True)
+
 
 # Fetching Online Image
 link_to_image = 'https://plus.unsplash.com/premium_photo-1681487769650-a0c3fbaed85a?q=80&w=1255&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 st.image(link_to_image)
-st.write('**Note:** This app also includes stock predictions for companies listed on the Pakistani Stock Market.')
+# st.write('**Note:** This app also includes stock predictions for companies listed on the Pakistani Stock Market.')
+st.markdown("<div style='text-align: center; color: #FF4500;'><strong>Note:</strong> This app also includes stock predictions for companies listed on the Pakistani Stock Market.</div>", unsafe_allow_html=True)
 
 # Sidebar to take input company
-st.sidebar.header('Select the parameters from below')
-start_date = st.sidebar.date_input('Start Date', date(2021,11 ,01))
-end_date = st.sidebar.date_input('End Date', date(year, month, day))
+# st.sidebar.header('Select the parameters from below')
+# start_date = st.sidebar.date_input('Start Date', date(2023,11 ,25))
+# end_date = st.sidebar.date_input('End Date', date(year, month, day))
+st.sidebar.header('📊 Select Parameters')
+start_date = st.sidebar.date_input('📅 Start Date', date(2023, 11, 25))
+end_date = st.sidebar.date_input('📅 End Date', date(year, month, day))
 
 pakistani_companies = [
     'Engro Corporation',
@@ -74,31 +81,46 @@ pakistani_tickers = [
     'APL.KA'    
 ]
 
-company = st.sidebar.selectbox('Select a stock', pakistani_companies)
-# Get the index of the selected company
-company_index = pakistani_companies.index(company)
+# company = st.sidebar.selectbox('Select a stock', pakistani_companies)
+# # Get the index of the selected company
+# company_index = pakistani_companies.index(company)
 
-# Use the index to retrieve the corresponding ticker
-ticker = pakistani_tickers[company_index]
+# # Use the index to retrieve the corresponding ticker
+# ticker = pakistani_tickers[company_index]
+company = st.sidebar.selectbox('🏢 Select a stock', pakistani_companies)
+ticker = pakistani_tickers[pakistani_companies.index(company)]
 
-# Fetching Data
-data = yf.download(ticker, start=start_date, end=end_date)
-data = data.reset_index()
+# # Fetching Data
+# data = yf.download(ticker, start=start_date, end=end_date)
+# data = data.reset_index()
+# data['Date'] = pd.to_datetime(data['Date'])
+# data.set_index('Date', inplace=True)
+# st.write('From ', start_date, ' to ', end_date)
+# st.dataframe(data,width=1000,height=400)
+
+# Fetching and displaying data with loading indicator
+with st.spinner('Fetching stock data...'):
+    data = yf.download(ticker, start=start_date, end=end_date).reset_index()
 data['Date'] = pd.to_datetime(data['Date'])
 data.set_index('Date', inplace=True)
-st.write('From ', start_date, ' to ', end_date)
-st.dataframe(data,width=1000,height=400)
-st.markdown("#### Overview")
+st.write(f'### Stock Data from {start_date} to {end_date}')
+st.dataframe(data, width=1000, height=400)
+
+st.markdown("####  Stock Prices Overview")
 
 
 # Plot the selected attribute over time
 fig = px.line(data, x=data.index, y=data.columns[:-1], title="Stock Prices", width=1000, height=600)
 st.plotly_chart(fig)
 
-# Stock Forecasting with ETS
-st.markdown('## Stock Price Forecasting')
-forecast_period = st.number_input('Select the number of days to forecast', 1, 120, 30)
-# Select which attribute to plot
+# # Stock Forecasting with ETS
+# st.markdown('## Stock Price Forecasting')
+# forecast_period = st.number_input('Select the number of days to forecast', 1, 120, 30)
+# # Select which attribute to plot
+# column = st.selectbox('**Which attribute do you want to forecast?**', data.columns[1:])
+# Stock forecasting section
+st.markdown('## 📈 Stock Price Forecasting')
+forecast_period = st.number_input('🔮 Select the number of days to forecast', 1, 120, 30)
 column = st.selectbox('**Which attribute do you want to forecast?**', data.columns[1:])
 
 
@@ -135,7 +157,7 @@ if 'show_summary' not in st.session_state:
     st.session_state.show_summary = False
 
 # Toggle button
-if st.button('Toggle Model Summary'):
+if st.button('📑 Toggle Model Summary'):
     st.session_state.show_summary = not st.session_state.show_summary
 
 # Show or hide model summary based on the button state
