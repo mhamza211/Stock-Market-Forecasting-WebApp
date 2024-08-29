@@ -1,4 +1,5 @@
-# Smart Stock Forecaster
+# [Smart Stock Forecaster](https://stock-market-web-suhaib-hamza.streamlit.app/)
+
 
 ## Overview
 
